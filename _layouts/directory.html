@@ -18,7 +18,6 @@ layout: default
     {% assign file_parent_dir = file_dir_array | slice: -2, 1 | first %}
     {% assign file_name = file_dir_array | last %}
     
-    {% if file_parent_dir == current_dir %}
       <li>
         {{ file.url }} 
         <br> 
@@ -28,7 +27,6 @@ layout: default
         <br>
         <small>file_name: {{ file_name }}</small>
       </li>
-    {% endif %}
   {% endfor %}
   </ul>
 </div>
