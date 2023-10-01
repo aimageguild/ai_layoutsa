@@ -1,5 +1,3 @@
-
-
 <style>
   .enlarged-text {
       font-size: 3em; /* Change this value to adjust the size */
@@ -9,11 +7,11 @@
 <link rel="stylesheet" href="{{ site.baseurl }}/_shared/reveal.js/dist/reveal.css">
 <link rel="stylesheet" href="{{ site.baseurl }}/_shared/reveal.js/dist/theme/white.css">
 
-
-<div id="slides">
-  {{ content | markdownify }}
+<div class="reveal">
+    <div class="slides">
+        {{ content | markdownify }}
+    </div>
 </div>
-
 
 <script src="{{ site.baseurl }}/_shared/reveal.js/dist/reveal.js"></script>
 <script>
