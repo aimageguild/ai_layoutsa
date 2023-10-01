@@ -1,21 +1,17 @@
 ---
+layout: default
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }}</title>
-</head>
-<body>
-    <h1>{{ page.title }} for {{ page.dir }}</h1>
-    <ul>
-    {% for file in site.static_files %}
-        {% if file.path contains page.dir and file.path != page.dir | append: 'index.html' %}
-            <li><a href="{{ site.baseurl }}{{ file.path }}">{{ file.name }}</a></li>
+
+<div class="directory-list">
+    {% for page in site.pages %}
+        {% if page.url contains page.dir %}
+            {% assign parent_dir = page.dir | split: '/' | last %}
+            {% assign current_dir = page.path | split: '/' | slice: -2, 1 | first %}
+            
+            {% if parent_dir == current_dir %}
+                {% assign filename = page.name | remove: '.md' %}
+                <a href="{{ site.baseurl }}{{ page.url }}">{{ filename }}</a><br>
+            {% endif %}
         {% endif %}
     {% endfor %}
-    </ul>
-</body>
-</html>
+</div>
