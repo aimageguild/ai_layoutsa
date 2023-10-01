@@ -2,9 +2,11 @@
 layout: default
 ---
 <ul>
-{% for page in site.pages %}
-  {% if page.path contains page.dir %}
-    <li><a href="{{ page.url }}">{{ page.name | remove: '.md' }}</a></li>
-  {% endif %}
+{% assign current_dir = page.path | remove: page.name %}
+{% for p in site.pages %}
+    {% assign page_dir = p.path | remove: p.name %}
+    {% if page_dir == current_dir %}
+        <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
+    {% endif %}
 {% endfor %}
 </ul>
