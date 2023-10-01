@@ -4,7 +4,13 @@ layout: default
 <ul>
 {% assign current_dir = page.path | remove: '.md' %}
 {% for p in site.pages %}
-    {% assign parent_dir = p.path | split: '/' | first: -2 | join: '/' %}
+    {% assign path_parts = p.path | split: '/' %}
+    {% assign path_parts_size = path_parts | size %}
+    {% if path_parts_size > 2 %}
+        {% assign parent_dir = path_parts | slice: 0, path_parts_size | minus: 2 | join: '/' %}
+    {% else %}
+        {% assign parent_dir = p.path %}
+    {% endif %}
     {% if parent_dir == current_dir %}
         <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
     {% endif %}
