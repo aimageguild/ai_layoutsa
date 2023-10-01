@@ -2,17 +2,20 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
-
-<ul>
-{% for p in site.pages %}
-    {% if p.url contains page.url and p.url != page.url %}
-    {% assign split_url = p.url | split: "/" %}
-    {% assign parent_url = page.url | split: "/" %}
-    {% if split_url.size == parent_url.size + 1 %}
-        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+<div class="page">
+  <h1>{{ page.title }}</h1>
+  
+  <ul>
+  {% assign current_dir = page.url | split: "/" | last %}
+  {% assign parent_dir = page.dir %}
+  {% for file in site.pages %}
+    {% assign file_dir_array = file.url | split: "/" %}
+    {% assign file_parent_dir = file_dir_array | slice: -2, 1 | first %}
+    {% assign file_name = file_dir_array | last %}
+    
+    {% if file_parent_dir == current_dir and file_name != 'index.md' %}
+      <li><a href="{{ site.baseurl }}{{ file.url }}">{{ file_name | remove: ".md" }}</a></li>
     {% endif %}
-    {% endif %}
-{% endfor %}
-</ul>
-
+  {% endfor %}
+  </ul>
+</div>
