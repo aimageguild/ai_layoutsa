@@ -2,17 +2,11 @@
 layout: default
 ---
 <ul>
-{% assign current_dir = page.path | split: '/' %}
-{% assign current_depth = current_dir | size %}
+{% assign current_dir = page.path | remove: page.name %}
 {% for p in site.pages %}
-    {% assign page_dir = p.path | split: '/' %}
-    {% assign page_depth = page_dir | size %}
-    {% if page_depth == current_depth and p.path != page.path %}
-        {% assign parent_dir_for_page = page_dir | slice: 0, current_depth - 1 | join: '/' %}
-        {% assign parent_dir_for_current = current_dir | slice: 0, current_depth - 1 | join: '/' %}
-        {% if parent_dir_for_page == parent_dir_for_current %}
-            <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
-        {% endif %}
+    {% assign page_dir = p.path | remove: p.name %}
+    {% if page_dir == current_dir and p.path != page.path %}
+        <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
     {% endif %}
 {% endfor %}
 </ul>
