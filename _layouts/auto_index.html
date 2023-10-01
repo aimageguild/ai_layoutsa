@@ -2,16 +2,8 @@
 layout: default
 ---
 
-<div class="directory-list">
-    {% for page in site.pages %}
-        {% if page.url contains page.dir %}
-            {% assign parent_dir = page.dir | split: '/' | last %}
-            {% assign current_dir = page.path | split: '/' | slice: -2, 1 | first %}
-            
-            {% if parent_dir == current_dir %}
-                {% assign filename = page.name | remove: '.md' %}
-                <a href="{{ site.baseurl }}{{ page.url }}">{{ filename }}</a><br>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
-</div>
+{% for page in site.pages %}
+{% if page.path contains page.dir %}
+- [{{ page.basename }}]({{ page.url }})
+{% endif %}
+{% endfor %}
