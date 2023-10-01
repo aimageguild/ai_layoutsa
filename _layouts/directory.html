@@ -4,27 +4,17 @@ layout: default
 
 <div class="page">
   <h1>{{ page.title }}</h1>
-  
-  <!-- Debugging Information -->
-  <h2>Debugging Information:</h2>
-  <p>Current page URL: {{ page.url }}</p>
-  <p>Current file name (without .html): {% assign current_filename = page.url | split: "/" | last | remove: ".html" %}{{ current_filename }}</p>
-  
-  <h2>Pages in the site:</h2>
+
   <ul>
+  {% assign current_filename = page.url | split: "/" | last | remove: ".html" %}
   {% for file in site.pages %}
     {% assign file_dir_array = file.url | split: "/" %}
     {% assign file_parent_dir = file_dir_array | slice: -2, 1 | first %}
-    {% assign file_name = file_dir_array | last %}
+    {% assign file_name = file_dir_array | last | remove: ".html" %}
     
-    <li>
-      Page URL: {{ file.url }} <br>
-      Page's parent directory: {{ file_parent_dir }} <br>
-      Page's filename: {{ file_name }}
-      {% if file_parent_dir == current_filename and file_name != 'index.html' %}
-        <strong> (This page should be listed based on the current page's filename)</strong>
-      {% endif %}
-    </li>
+    {% if file_parent_dir == current_filename and file_name != 'index' %}
+      <li><a href="{{ site.baseurl }}{{ file.url }}">{{ file_name }}</a></li>
+    {% endif %}
   {% endfor %}
   </ul>
 </div>
