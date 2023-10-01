@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<ul>
+{% for node in site.static_files %}
+    {% if node.path contains page.dir %}
+        {% assign path_parts = node.path | split: "/" %}
+        {% assign depth = path_parts | size %}
+        {% assign current_depth = page.dir | split: "/" | size %}
+        {% if depth == current_depth + 1 %}
+            <li>
+                <a href="{{ node.path | relative_url }}">{{ path_parts[depth-1] | remove: ".md" }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</ul>
