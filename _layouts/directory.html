@@ -4,7 +4,8 @@ layout: default
 <ul>
 {% assign current_dir = page.path | remove: page.name %}
 {% for p in site.pages %}
-    {% if p.path contains current_dir and p.path != page.path %}
+    {% assign page_dir = p.path | split: '/' | pop %}
+    {% if page_dir == current_dir and p.path != page.path %}
         <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
     {% endif %}
 {% endfor %}
