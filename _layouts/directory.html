@@ -8,17 +8,22 @@ layout: default
   <h2>Debugging Information:</h2>
 
   <p>page.url: {{ page.url }}</p>
+  <p>page.url split into array: {{ page.url | split: "/" | join: ", " }}</p>
+  <p>Penultimate item from the array: {{ page.url | split: "/" | slice: -2, 1 | join: ", " }}</p>
+  <p>current_dir (final value): {{ current_dir }}</p>
   <p>current_dir (from page.url): {{ current_dir }}</p>
 
   <h3>Files in the same directory:</h3>
   <ul>
   {% assign current_dir = page.url | split: "/" | slice: -2, 1 | first %}
+
+
   {% for file in site.pages %}
     {% assign file_dir_array = file.url | split: "/" %}
     {% assign file_parent_dir = file_dir_array | slice: -2, 1 | first %}
     {% assign file_name = file_dir_array | last %}
     
-      <li>
+    <li>
         {{ file.url }} 
         <br> 
         <small>file_dir_array: {{ file_dir_array | join: ", " }}</small>
@@ -27,6 +32,9 @@ layout: default
         <br>
         <small>file_name: {{ file_name }}</small>
       </li>
+    {% if file_parent_dir == current_dir %}
+
+    {% endif %}
   {% endfor %}
   </ul>
 </div>
