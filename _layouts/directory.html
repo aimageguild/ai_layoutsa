@@ -2,10 +2,11 @@
 layout: default
 ---
 <ul>
-{% assign current_dir = page.path | remove: page.name %}
+{% assign current_dir_array = page.path | split: '/' %}
+{% assign parent_dir = current_dir_array | slice: 0, current_dir_array.size | minus: 1 | join: '/' %}
 {% for p in site.pages %}
-    {% assign page_dir = p.path | remove: p.name %}
-    {% if page_dir == current_dir and p.path != page.path %}
+    {% assign page_dir_array = p.path | split: '/' %}
+    {% if page_dir_array.size == current_dir_array.size and p.path contains parent_dir and p.path != page.path %}
         <li><a href="{{ p.url }}">{{ p.name | remove: '.md' }}</a></li>
     {% endif %}
 {% endfor %}
