@@ -1,0 +1,111 @@
+---
+layout: default
+---
+
+<style>
+  .enlarged-text {
+      font-size: 3em; /* Change this value to adjust the size */
+  }
+</style>
+
+<div id="slides">
+  {{ content | markdownify }}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var currentSlide = 0;
+    var totalSlides = $('.slide').length;
+
+    // Hide all slides except the first one
+    $('.slide').hide();
+    $('.slide').eq(currentSlide).show();
+
+    // Add the navigation buttons
+    var prevSlideButton = '<button id="prevSlide" style="position: fixed; left: 10px; bottom: 10px; font-size: 2em;">←</button>';
+    var nextSlideButton = '<button id="nextSlide" style="position: fixed; right: 10px; bottom: 10px; font-size: 2em;">→</button>';
+    $("body").append(prevSlideButton, nextSlideButton);
+
+    // Initially disable the Previous Slide button
+    $('#prevSlide').prop('disabled', true);
+
+    // Populate ToC for slides
+    var tocHTML = "";
+    $('.slide').each(function(index) {
+        var slideTitle = $(this).find('h2').text();
+        tocHTML += '<p><a href="#slide' + index + '">' + '◇' + slideTitle + '</a></p>';
+    });
+    $('#toc').html(tocHTML);
+
+    // When the Next Slide button is clicked
+    $('#nextSlide').click(function() {
+      // Hide current slide
+      $('.slide').eq(currentSlide).hide();
+
+      // Increment currentSlide
+      currentSlide = (currentSlide + 1) % totalSlides;
+
+      // Show next slide
+      $('.slide').eq(currentSlide).show();
+
+      // Scroll to top
+      window.scrollTo(0, 100);
+
+      // Enable the Previous Slide button
+      $('#prevSlide').prop('disabled', false);
+
+      // Disable the Next Slide button if this is the last slide
+      if (currentSlide === totalSlides - 1) {
+        $('#nextSlide').prop('disabled', true);
+      }
+    });
+
+    // When the Previous Slide button is clicked
+    $('#prevSlide').click(function() {
+      // Hide current slide
+      $('.slide').eq(currentSlide).hide();
+
+      // Decrement currentSlide
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+
+      // Show previous slide
+      $('.slide').eq(currentSlide).show();
+
+      // Scroll to top
+      window.scrollTo(0, 100);
+
+      // Enable the Next Slide button
+      $('#nextSlide').prop('disabled', false);
+
+      // Disable the Previous Slide button if this is the first slide
+      if (currentSlide === 0) {
+        $('#prevSlide').prop('disabled', true);
+      }
+    });
+
+    // When a link in the table of contents is clicked
+    $('#toc a').click(function(e) {
+      e.preventDefault();
+      var targetSlideNumber = parseInt($(this).attr('href').replace('#slide', ''));
+      if (!isNaN(targetSlideNumber)) {
+        // Hide current slide
+        $('.slide').eq(currentSlide).hide();
+
+        // Update currentSlide
+        currentSlide = targetSlideNumber;
+
+        // Show target slide
+        $('.slide').eq(currentSlide).show();
+
+        // Scroll to top
+        window.scrollTo(0, 100);
+
+        // Disable or enable the navigation buttons as necessary
+        $('#prevSlide').prop('disabled', currentSlide === 0);
+        $('#nextSlide').prop('disabled', currentSlide === totalSlides - 1);
+      }
+    });
+  });
+</script>
