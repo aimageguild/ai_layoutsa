@@ -18,9 +18,9 @@ layout: default
 
       {% if file_parent_dir == current_filename and file_base_name != 'index' %}
         {% if file.title %}
-          <li><a href="./{{ file.url }}">{{ file.title }}</a></li>
+          <li><a href="{{ site.baseurl }}{{ file.url }}">{{ file.title }}</a></li>
         {% else %}
-          <li><a href="./{{ file.url }}">{{ file_base_name }}</a></li>
+          <li><a href="{{ site.baseurl }}{{ file.url }}">{{ file_base_name }}</a></li>
         {% endif %}
       {% endif %}
     {% endif %}
