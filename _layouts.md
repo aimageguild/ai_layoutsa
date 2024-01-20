@@ -1,5 +1,0 @@
----
-layout: directory
----
-
-# _layouts
