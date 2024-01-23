@@ -82,10 +82,13 @@ layout: base
     // Loop over our ToC
     toc.forEach(function(tocItem) {
         // Add an indent based on the header level
-        var indent = parseInt(tocItem.tagName.substring(1)) - 1;
+        // Calculate indent and font size based on the header level
+        var level = parseInt(tocItem.tagName.substring(1)) - 1;
+        var indent = level * 2; // Increase indent for each level
+        var fontSize = (1 - level * 0.1) + 'em'; // Decrease font size for each level
 
         // Add the item to the ToC HTML
-        tocHTML += '<p style="text-indent: ' + indent + 'em;"><a href="#' + tocItem.id + '">' + tocItem.text + '</a></p>';
+        tocHTML += '<p style="text-indent: ' + indent + 'em; font-size: ' + fontSize + ';"><a href="#' + tocItem.id + '">' + '◇' + tocItem.text + '</a></p>';
     });  
 
     // Inject our ToC into the div
