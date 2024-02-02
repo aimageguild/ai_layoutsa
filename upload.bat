@@ -1,6 +1,6 @@
-git config --local user.name "LatticeMage"
-git config --local user.email "LatticeMage@gmail.com"
-git remote set-url origin git@LM:LatticeMage/jekyll-shared-components.git
+git config --local user.name "AI-Mage"
+git config --local user.email "ai@posetmage.com"
+git remote set-url origin git@AM:aimageguild/jekyll-shared-components.git
 
 git pull
 git add .
